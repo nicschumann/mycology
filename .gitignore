@@ -1,0 +1,8 @@
+# compiled files
+pub/bundle*
+
+# node-specific ignores
+node_modules
+
+# macOS-specific ignores
+.DS_Store
