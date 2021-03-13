@@ -1,3 +1,8 @@
+# font binaries
+*.woff
+*.woff2
+*.eot
+
 # compiled files
 pub/bundle*
 
