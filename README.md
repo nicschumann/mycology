@@ -35,7 +35,9 @@ There are three fields of play in the game. One is the `garden`: an 8x8 grid. An
 
 The game consists of an infinite sequence of turns. During each turn, you transition through the following states:
 
-**Player.** You start your turn with a certain number of clicks to spend (this is a parameter for the game. For this explanation, let's say it's 3 clicks). You can click on squares in the grid. What happens depends on what you click on. There are a few different types of squares in the grid:
+#### Player
+
+You start your turn with a certain number of clicks to spend (this is a parameter for the game. For this explanation, let's say it's 3 clicks). You can click on squares in the grid. What happens depends on what you click on. There are a few different types of squares in the grid:
 
 - `Mushrooms`
   - If you click on a garden square containing a mushroom, you harvest it, and it's removed from the garden and added to your field guide's inventory.
