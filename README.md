@@ -33,6 +33,8 @@ The "purpose" of the game is to collect as much of "Ray" (if you think of collec
 
 There are three fields of play in the game. One is the `garden`: an 8x8 grid. Another is the `field guide`, a list of all the plants the player has encountered, as well as a collection of what the player currently has in their current collection. The number of "slots" in the field guide is a parameter to the game. The third and final is the `log book`. The story of the garden unfolds in the logbook, where the main characters record their thoughts and experiences as you progress through the game.
 
+You start with a random initial garden with some distribution of empty space, flowers, and weeds. It is guaranteed to contain one mushroom.
+
 The game consists of an infinite sequence of turns. During each turn, you transition through the following states:
 
 #### Player
