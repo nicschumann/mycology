@@ -7,8 +7,8 @@ On 3/12/2021, Cem Eskinazi and I met up to talk about a web project to complimen
 We made a list of constraints that we hope the project will satisfy. I'm reproducing that list here, because it's our jumping off point.
 
 - Works on Desktop and Mobile equally well
-- Centers **one** interaction; simple
-- Done in two weeks
+  - *I question this a little bit with the direction the game is going, but let's see if we can do it.*
+- Centers **one** interaction; simple.
 - Short iteration and prototyping times
 - "Ray" is the source material
 - Type is the protagonist
@@ -80,7 +80,7 @@ Each square in the garden can be in one of four states.
 
 - `Mushroom`. If the square is a mushroom, then in its next state, it either becomes a bigger mushroom, or decays.
 
-- `Weed`. If a square is a weed, then it grows with probability 1. In addition, it increases the likelyhood of weeds in adjacent empty cells, decreases the likelyhood of growth in neighboring cells for both mushrooms and flowers.
+- `Weeds`. If a square is a weed, then it grows with probability 1. In addition, it increases the likelyhood of weeds in adjacent empty cells, decreases the likelyhood of growth in neighboring cells for both mushrooms and flowers.
 
 Your inventory state is pretty simple. Each item has a lifespan (with the exception of seeds, and compost), and the lifespan is decremented. If a lifespan hits zero, the item is removed from your inventory.
 
