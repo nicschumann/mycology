@@ -29,32 +29,32 @@ Different paths through this progress happen, depending on what you choose to do
 
 ## Play
 
-The "purpose" of the game is to collect as much of "Ray" (if you think of collecting "Ray" as collecting glyphs across weights) as you can over the course of play.
+The "purpose" of the game is to collect as much of "Ray" (if you think of collecting "Ray" as collecting glyphs across weights) as you can over the course of play. The way you collect Ray is by growing and nurturing flowers, eating mushrooms, and keeping out weeds. It's just like real life!
 
-There are three fields of play in the game. One is the `garden`: an 8x8 grid. Another is the `field guide`, a list of all the plants the player has encountered, as well as a collection of what the player currently has in their current collection. The number of "slots" in the field guide is a parameter to the game. The third and final is the `log book`. The story of the garden unfolds in the logbook, where the main characters record their thoughts and experiences as you progress through the game.
+There are three areas of play in the game, which you always have access to. An 8x8 grid called the `garden` is the primary area that you care for. Along side the garden, you have a `field guide`, a list of all the plants the player has encountered, as notes about what the player has in their garden (The number of "slots" in the field guide's inventory is a parameter to the game). The third and final area is the `log book`. The story of the garden unfolds in the logbook, where the main characters record their thoughts and experiences as you progress through the game. The log book also serves as a traditionally typeset proof of Ray.
 
-You start with a random initial garden with some distribution of empty space, flowers, and weeds. It is guaranteed to contain one mushroom.
+You start with a random initial garden with some distribution of empty space, flowers, and weeds. It is guaranteed to contain one mushroom in a random cell.
 
-The game consists of an infinite sequence of turns. During each turn, you transition through the following states:
+The game consists of an infinite sequence of turns. During each turn, you transition through the following:
 
 #### Player
 
-You start your turn with a certain number of clicks to spend (this is a parameter for the game. For this explanation, let's say it's 3 clicks). You can click on squares in the grid. What happens depends on what you click on. There are a few different types of squares in the grid:
+You start your turn with a certain number of actions to spend (this is a parameter for the game. For this explanation, let's say it's 3 actions. Actions tightly correspond to clicks. For example, clicking a flower to pick it is an action. Clicking seeds in your inventory and then clicking on the garden to plant them is an action). You can click on squares in the grid. What happens depends on what you click on. There are a few different types of squares in the grid:
 
 - `Mushrooms`
   - If you click on a garden square containing a mushroom, you harvest it, and it's removed from the garden and added to your field guide's inventory.
-  - If you click an inventory square containing a mushroom, you eat the mushroom. This changes your perception of the world, which changes the way you see the mushrooms, flowers, and weeds in the garden. (basically, this is leveling up. This can also convert certain weeds into flowers, and flowers into weeds).
+  - If you click an inventory square containing a mushroom, you eat the mushroom. This changes your perception of the world, which changes the way you see the mushrooms, flowers, and weeds in the garden. (basically, this is leveling up. This can also convert certain weeds into flowers, or flowers into weeds. Ideas and perspectives change).
   - If you wait and keep the mushroom in your inventory, after a certain number of turns it will rot and turn into `spores`.
 
 - `Flowers`
-  - If you click a garden square containing a flower, the flower is added to your inventory and removed from the garden grid. The flower is also then added to your flower vase, where it remains for some turns (depending on the flower, as long as you keep the flower in your inventory). The number of flowers in your vase increases the number of clicks you can spend per turn (again, based on the number of turns).
-  - If you click on an inventiry square containing a flower, you harvest seeds from it. It's removed from your inventory, and replaced by `seeds`. Planting seeds increases the (high) likelyhood that flowers of the same sort will grow there).
+  - If you click a garden square containing a flower, the flower is added to your inventory and removed from the garden grid. The number of flowers in your inventory (think of it as your flower vase c:) increases the number of clicks you can spend per turn.
+  - If you click on an inventory square containing a flower, you harvest seeds from it. It's removed from your inventory, and replaced by `seeds`. Planting seeds increases the (high) likelyhood that flowers of the same sort will grow there).
   - If you wait and keep the flower in your inventiry, after a certain number of turns it will wilt and be removed from your inventory.
 
 
 - `Weeds`
-  - If you click a garden square containing a weed, you'll pick the weed, and add it to your inventory, and remove it from the grid.
-  - If you click an inventory square containing a weed, then you turn the weed into `compost` immediately
+  - If you click a garden square containing weeds, you'll uproot and add them to your inventory, and remove it from the grid.
+  - If you click an inventory square containing weeds, then you turn the weed into `compost` immediately.
   - If you wait and keep the weeds in your inventory, it will eventually decay into `compost`.
 
 
@@ -74,27 +74,44 @@ You start your turn with a certain number of clicks to spend (this is a paramete
 
 #### Environment
 
-After you've spent all your clicks, it's the environment's turn to act. The environment's actions happen in two phases: first, the transition probabilities are updated based on the current state of the garden grid. Then, your inventory state is updated.
+After you've spent all your actions, it's the environment's turn to act. The environment's actions happen in two phases: First, each cell in the game transitions according to the current transition probabilities. Then, the transition probabilities are updated based on the new state of the garden grid.  Then, your inventory state is transitioned based on how long things have been there. Then, it's your turn again.
 
 Each square in the garden can be in one of four states.
 
-- `Empty`. If the square is empty, then it either becomes a flower, a mushroom, a weed, or nothing happens, depending on a discrete probability distribution assigned to that square.
+- `Empty`. If the square is empty, then it either becomes a flower, a mushroom, a weed, or nothing happens, depending on a discrete probability distribution assigned to that square. This distribution is unique for each square.
 
-- `Flower`. If the square is a flower, then in its next state, it either becomes a bigger flower, or it doesn't grow.
+- `Flower`. If the square is a flower, then in its next state, it either becomes a bigger flower, or it doesn't grow. Flowers increase the likelihood of a mushroom  to grow in a neighboring empty squares.
 
-- `Mushroom`. If the square is a mushroom, then in its next state, it either becomes a bigger mushroom, or decays.
+- `Mushroom`. If the square is a mushroom, then in its next state, it either becomes a bigger mushroom, or decays. If the mushroom is next to a flower, it's likelyhood of getting bigger increases.
 
-- `Weeds`. If a square is a weed, then it grows with probability 1. In addition, it increases the likelyhood of weeds in adjacent empty cells, decreases the likelyhood of growth in neighboring cells for both mushrooms and flowers.
+- `Weeds`. If a square is a weed, then it grows with probability 1. In addition, it increases the likelyhood of weeds in adjacent empty cells, decreases the likelyhood of growth in neighboring cells mushroom and flower cells (for flowers, it prevents further growth, for mushrooms it increases likelihood of decay.).
 
-Your inventory state is pretty simple. Each item has a lifespan (with the exception of seeds, and compost), and the lifespan is decremented. If a lifespan hits zero, the item is removed from your inventory.
+Transitions can be represented as a grid. Each cell has a list of numbers, that corresponds to a table of multipliers for the cell's transition matrix.
+
+- For `Empty` cells, the list `x, y, z` corresponds to the probabilities that the cell transitions to a flower, mushroom, or weeds, respectively. The probability that the cell remains empty is `1 - x - y - z`.
+- For `Flowers`, the number `x` corresponds to the probability that the flower will grow, rather than stay the same.
+- For `Mushrooms`, the number `x` represents the probability that the mushroom will grow, rather than decay.
+- For `Weeds`, the number `x` represents the probability that the weed will grow.
+
+In theory, each unique flower, weed, or mushroom could have it's own transition matrix, which would interact in different ways. This is how we could change the game dynamics depending on what's on the board.
+
+|   | Empty | Flower | Mushroom | Weeds |
+| - | - | - | - | - |
+| **Empty** | 1, 1, 1 | 1 | 1 | 1 |
+| **Flower** | 1, 1.5, 1 | 1.1 | 1  | 0.8 |
+| **Mushroom** | 1, 1, 1 | 1 | 1.1 | 1 |
+| **Weeds** | 0.8, 0.8, 1.2 | 0.8 | 0.8 | 1 |
+
+*This table is an example transition table update for each cell in the game according to its neighbors. These numbers are, obviously, tunable parameters.*
+
+Your inventory state is pretty simple. Each item has a lifespan (with the exception of seeds, and compost), and the lifespan is decremented. If a lifespan hits zero, the item is transformed into its next state, or removed from your inventory if it has no next state.
 
 #### Narrative
 
-Narrative elements are revealed as you reach different states of the garden and inventory. Whenever a state is changed, the narrative flow is checked and new entries are added as relevant. One entry per click.
-
+Narrative elements are revealed as you reach different states of the garden and inventory. Whenever a state is changed, the narrative flow is checked and new entries are added as relevant. Max one entry per action.
 
 #### Endgame
 
-You "win" when the garden is full of flowers. However, you can keep playing indefinitely, because flowers you can pick flowers and keep playing as you choose. However, if you don't interact and the garden is full of flowers, it will grow indefinitely. Keep your browser open!
+You "win" when the garden is full of flowers. However, you can keep playing indefinitely, because you can pick flowers and create new space in the garden. keep playing as you choose. However, if you don't interact and the garden is full of flowers, it will grow indefinitely. Keep your browser open!
 
-You lose if the garden is full of weeds, because then there's no way to grow mushrooms or flowers. Of course, you could try and get lucky, by picking weeds and hoping a flower grows, but that's ... pretty hard.
+You lose if the garden is full of weeds, and you don't have any seeds, because then there's no way to grow mushrooms or flowers. Of course, you could try and get lucky, by picking weeds and hoping a flower grows, but that's ... pretty hard. There's always a chance though, so technically, you can't ever lose.
