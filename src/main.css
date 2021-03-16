@@ -1,7 +1,33 @@
 @import "./fonts/fonts.css";
 
 body {
-  background-color: red;
+  background-color: black;
   font-family: "Ray";
   font-weight: 400;
+}
+
+#garden-container {
+  position: absolute;
+  top:50%;
+  left:50%;
+  display: flex;
+  margin:auto;
+  width:fit-content;
+
+  transform:translate(-50%,-50%);
+}
+
+.cell {
+  width:10vw;
+  height:10vw;
+  border:1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.cell-type-empty
+{
+  color: #252525;
 }
