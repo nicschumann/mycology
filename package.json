@@ -14,6 +14,7 @@
     "live-server": "^1.2.1"
   },
   "dependencies": {
-    "mithril": "^2.0.4"
+    "mithril": "^2.0.4",
+    "transform-parser": "^1.0.1"
   }
 }

@@ -1,9 +1,12 @@
 @import "./fonts/fonts.css";
+@import "./editor.css";
 
 body {
   background-color: black;
   font-family: "Ray";
   font-weight: 100;
+  /* box-sizing: content-box; */
+  overflow: hidden;
 }
 
 
@@ -37,7 +40,7 @@ body {
 }
 
 .cell-type-flower {
-  color: rgb(0, 255, 0);
+  color: rgb(255, 0, 0);
 }
 
 .cell-type-weed {
@@ -106,5 +109,5 @@ body {
 
 .action-count {
   border:none;
-  font-size: 3em;
+  font-size: 4em;
 }
