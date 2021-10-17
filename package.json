@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "mithril": "^2.0.4",
+    "regl": "^2.1.0",
     "transform-parser": "^1.0.1"
   }
 }
