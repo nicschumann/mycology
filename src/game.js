@@ -219,7 +219,8 @@ function empty_garden_cell(index, parameters, state)
     age: 0,
     entity: {
       // to empty, to mushroom, to flower, to weed
-      transitions: softmax_normalize_distribution([0.96, 0.01, 0.01, 0.02]),
+      // transitions: softmax_normalize_distribution([0.96, 0.01, 0.01, 0.02]),
+      transitions: [0.95, 0.01, 0.01, 0.03],
       transition_factors: [1, 1, 1, 1],
       resilience_factor: 1,
 
@@ -284,7 +285,7 @@ function weed_garden_cell(index, parameters, state)
       // grow or stay the same?
       transitions: softmax_normalize_distribution([0.01, 0.00, 0.0, 0.99]),
       // to empty, to mushroom, to flower, to weed
-      transition_factors: [1, 0.8, 0.5, 1.2],
+      transition_factors: [1, 0.8, 0.6, 1.1],
       resilience_factor: 0.9,
 
       life_span: 1,

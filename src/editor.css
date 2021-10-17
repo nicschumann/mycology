@@ -64,6 +64,7 @@
   z-index: 1000;
 }
 
+
 .handle {
 
   position: absolute;
@@ -120,3 +121,66 @@
 .glyph.debug {
   border:1px dotted red;
 } */
+
+
+
+
+.component-data {
+  width:fit-content;
+}
+
+.component-input
+{
+  width:100%;
+  display: block;
+  margin-bottom:5px;
+  border:1px solid white;
+  border-radius: 5px;
+  background-color: transparent;
+  color:white;
+  padding:4px;
+}
+
+.entity-node-part-palette
+{
+  color: white;
+
+  width:fit-content;
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content:center;
+  text-align: center;
+
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-bottom: 5px;
+
+  padding:5px 0px 5px 5px;
+}
+
+.entity-node-part
+{
+  font-size:20px;
+
+  border: 1px solid white;
+  border-radius: 5px;
+
+  width:25px;
+  height:25px;
+
+  margin-right:5px;
+}
+.entity-node-part:hover
+{
+  background-color: white;
+  color:black;
+  cursor: pointer;
+}
+
+.step-simulate-button
+{
+  color:black;
+  width:fit-content;
+  background-color: white;
+  padding:5px;
+}
